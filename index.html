@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>မင်္ဂလာဦး ဆွမ်းကပ် ဖိတ်ကြားလွှာ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Noto+Serif+Myanmar:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #f5e6e0;
+        }
+
+        .invitation-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8e8e0 0%, #fce8e0 30%, #f5ddd3 60%, #e8d0c5 100%);
+            position: relative;
+        }
+
+        /* Cherry blossom corner decorations */
+        .corner-flower {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            width: 24vmin;
+            height: 20vmin;
+            max-width: 220px;
+            max-height: 180px;
+        }
+
+        .corner-flower svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .corner-flower.top-left { top: -10px; left: -14px; }
+        .corner-flower.top-right { top: -10px; right: -14px; }
+        .corner-flower.bottom-left { bottom: -10px; left: -14px; }
+        .corner-flower.bottom-right { bottom: -10px; right: -14px; }
+
+        /* Vignette overlay */
+        .vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(180, 140, 120, 0.15) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .invitation-card {
+            position: relative;
+            z-index: 3;
+            width: min(98vw, 96vh * 0.82);
+            height: auto;
+            max-height: 98vh;
+            background: rgba(255, 248, 245, 0.96);
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(139, 90, 70, 0.18);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top section with main photo and text */
+        .main-section {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .photo-left {
+            width: 38%;
+            position: relative;
+            overflow: hidden;
+            align-self: stretch;
+        }
+
+        .photo-left img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 55% top;
+        }
+
+        /* Soft fade on right edge of photo */
+        .photo-left::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 248, 245, 0.92));
+        }
+
+        .content-right {
+            flex: 1;
+            padding: 2vh 2.5vw 2vh 1.5vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ornamental top decoration */
+        .ornament-top {
+            width: 60%;
+            height: 2.5vh;
+            margin-bottom: 0.5vh;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 30'%3E%3Cpath d='M100 5 C95 5 90 8 90 12 C90 15 92 17 95 18 L95 22 L100 25 L105 22 L105 18 C108 17 110 15 110 12 C110 8 105 5 100 5 Z M30 15 L80 15 M120 15 L170 15' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='20' cy='15' r='2' fill='%23b8860b'/%3E%3Ccircle cx='180' cy='15' r='2' fill='%23b8860b'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .title {
+            font-family: 'Noto Serif Myanmar', 'Padauk', serif;
+            font-size: clamp(0.85rem, 2.6vh, 1.9rem);
+            font-weight: 700;
+            color: #b8860b;
+            text-align: center;
+            line-height: 1.3;
+            margin-bottom: 0.8vh;
+            text-shadow: 0 1px 2px rgba(184, 134, 11, 0.2);
+            white-space: nowrap;
+        }
+
+        .divider {
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #c9a86c, transparent);
+            margin-bottom: 1.2vh;
+            position: relative;
+        }
+
+        .divider::after {
+            content: '❧';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #c9a86c;
+            font-size: 1.2vh;
+            background: rgba(255, 248, 245, 0.92);
+            padding: 0 8px;
+        }
+
+        .text-content {
+            text-align: center;
+            font-family: 'Noto Serif Myanmar', 'Padauk', serif;
+            color: #5a3a2a;
+            line-height: 1.55;
+        }
+
+        .text-content .family-info {
+            font-size: clamp(0.58rem, 1.45vh, 0.95rem);
+            margin-bottom: 0.4vh;
+            letter-spacing: 0.2px;
+        }
+
+        .text-content .person-name {
+            font-size: clamp(0.75rem, 1.9vh, 1.35rem);
+            font-weight: 700;
+            color: #8b2635;
+            margin: 0.7vh 0;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 1px rgba(139, 38, 53, 0.1);
+            white-space: nowrap;
+        }
+
+        .text-content .separator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 1vh 0;
+            font-size: clamp(0.62rem, 1.5vh, 0.95rem);
+            color: #7a5a4a;
+            font-family: 'Noto Serif Myanmar', 'Padauk', serif;
+        }
+
+        .text-content .separator .sep-line {
+            width: 36px;
+            height: 1.5px;
+            background: linear-gradient(to right, transparent, #c9a86c);
+        }
+
+        .text-content .separator .sep-line.right {
+            background: linear-gradient(to left, transparent, #c9a86c);
+        }
+
+        .event-intro {
+            font-size: clamp(0.58rem, 1.4vh, 0.95rem);
+            margin: 0.8vh 0;
+            letter-spacing: 0.2px;
+        }
+
+        /* Info box */
+        .info-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            margin: 1vh 0;
+            padding: 1vh 1.5vw;
+            border: 1.5px solid #d4af37;
+            border-radius: 8px;
+            background: rgba(255, 250, 245, 0.8);
+            width: 100%;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6vw;
+            flex: 1;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        .info-item.calendar {
+            border-right: 1px solid #d4af37;
+            padding-right: 2vw;
+        }
+
+        .info-icon {
+            font-size: clamp(1rem, 2.3vh, 1.7rem);
+            flex-shrink: 0;
+        }
+
+        .info-text {
+            text-align: left;
+            line-height: 1.3;
+        }
+
+        .info-text .label {
+            font-size: clamp(0.48rem, 1.15vh, 0.8rem);
+            color: #8b2635;
+        }
+
+        .info-text .value {
+            font-size: clamp(0.58rem, 1.35vh, 0.95rem);
+            color: #5a3a2a;
+            font-weight: 700;
+        }
+
+        .info-text .sub {
+            font-size: clamp(0.48rem, 1.05vh, 0.75rem);
+            color: #7a5a4a;
+        }
+
+        .closing-text {
+            font-size: clamp(0.58rem, 1.35vh, 0.95rem);
+            color: #5a3a2a;
+            text-align: center;
+            line-height: 1.55;
+            margin-top: 0.7vh;
+            letter-spacing: 0.2px;
+        }
+
+        /* Bottom photos */
+        .bottom-photos {
+            display: flex;
+            gap: 1.5vw;
+            padding: 1.5vh 2vw 2.5vh;
+            justify-content: center;
+            align-items: flex-end;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bottom-photos img {
+            width: 28%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 2px 8px rgba(139, 90, 70, 0.15);
+        }
+
+        /* Bottom banner */
+        .bottom-banner {
+            background: linear-gradient(to right, #eab8b0, #f5d0c8, #eab8b0);
+            padding: 1.5vh 3vw;
+            text-align: center;
+            font-family: 'Noto Serif Myanmar', 'Padauk', serif;
+            font-size: clamp(0.68rem, 1.6vh, 1.1rem);
+            color: #5a3a2a;
+            line-height: 1.5;
+            position: relative;
+            z-index: 3;
+            margin-top: -2.5vh;
+            border-radius: 3vh 3vh 0 0;
+            box-shadow: 0 -6px 20px rgba(160, 100, 90, 0.25), 0 -2px 8px rgba(160, 100, 90, 0.15);
+        }
+
+        .bottom-banner::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 5%;
+            right: 5%;
+            height: 20px;
+            background: radial-gradient(ellipse at center, rgba(245, 208, 200, 0.9) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .heart {
+            color: #e85d75;
+        }
+
+        /* Small height screens */
+        @media (max-height: 600px) {
+            .invitation-card {
+                width: min(99vw, 98vh * 0.82);
+                border-radius: 6px;
+            }
+            .content-right {
+                padding: 0.8vh 1.5vw 0.5vh 1vw;
+            }
+            .ornament-top {
+                height: 2vh;
+                margin-bottom: 0.3vh;
+            }
+            .title {
+                font-size: clamp(0.75rem, 2.4vh, 1.4rem);
+                margin-bottom: 0.5vh;
+            }
+            .divider {
+                margin-bottom: 0.8vh;
+            }
+            .text-content .family-info,
+            .text-content .event-intro {
+                font-size: clamp(0.5rem, 1.4vh, 0.72rem);
+                margin-bottom: 0.25vh;
+            }
+            .text-content .person-name {
+                font-size: clamp(0.6rem, 1.7vh, 0.95rem);
+                margin: 0.5vh 0;
+            }
+            .text-content .separator {
+                margin: 0.6vh 0;
+                font-size: clamp(0.5rem, 1.4vh, 0.8rem);
+            }
+            .event-intro {
+                margin: 0.5vh 0;
+            }
+            .info-box {
+                margin: 0.7vh 0;
+                padding: 0.7vh 1.2vw;
+                gap: 1.5vw;
+            }
+            .info-icon {
+                font-size: clamp(0.9rem, 2.2vh, 1.4rem);
+            }
+            .info-text .label {
+                font-size: clamp(0.42rem, 1.1vh, 0.65rem);
+            }
+            .info-text .value {
+                font-size: clamp(0.5rem, 1.3vh, 0.75rem);
+            }
+            .info-text .sub {
+                font-size: clamp(0.42rem, 1.0vh, 0.6rem);
+            }
+            .closing-text {
+                font-size: clamp(0.5rem, 1.25vh, 0.75rem);
+                margin-top: 0.4vh;
+            }
+            .bottom-photos {
+                padding: 1vh 1.5vw 2vh;
+                gap: 1vw;
+            }
+            .bottom-photos img {
+                border-radius: 6px;
+                border-width: 1.5px;
+            }
+            .bottom-banner {
+                padding: 1vh 2vw;
+                font-size: clamp(0.55rem, 1.4vh, 0.85rem);
+                margin-top: -2vh;
+                border-radius: 2.5vh 2.5vh 0 0;
+            }
+        }
+
+        /* Narrow screens to prevent text wrapping */
+        @media (max-width: 500px) {
+            .photo-left {
+                width: 30%;
+            }
+            .title {
+                font-size: clamp(0.65rem, 1.7vh, 1.2rem);
+            }
+            .text-content .person-name {
+                font-size: clamp(0.6rem, 1.6vh, 0.9rem);
+            }
+            .info-item {
+                gap: 1vw;
+            }
+            .info-icon {
+                font-size: clamp(0.85rem, 2vh, 1.3rem);
+            }
+            .info-text .value {
+                font-size: clamp(0.5rem, 1.2vh, 0.75rem);
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 360px) {
+            .invitation-card {
+                width: 100vw;
+                border-radius: 0;
+            }
+            .photo-left {
+                width: 28%;
+            }
+            .title {
+                font-size: clamp(0.6rem, 1.5vh, 1.1rem);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-wrapper">
+        <!-- Corner cherry blossom decorations -->
+        <div class="corner-flower top-left">
+            <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <g id="fl-pink-tl">
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(72)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(144)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(216)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(288)"/>
+                        <circle cx="0" cy="0" r="5" fill="#ffe4b5"/>
+                        <circle cx="0" cy="0" r="2.5" fill="#daa520"/>
+                    </g>
+                    <g id="fl-light-tl">
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(72)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(144)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(216)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(288)"/>
+                        <circle cx="0" cy="0" r="5" fill="#fff8dc"/>
+                        <circle cx="0" cy="0" r="2.5" fill="#daa520"/>
+                    </g>
+                </defs>
+                <use href="#fl-pink-tl" transform="translate(40,40) rotate(15) scale(0.95)"/>
+                <use href="#fl-light-tl" transform="translate(85,30) rotate(-20) scale(0.75)"/>
+                <use href="#fl-pink-tl" transform="translate(55,80) rotate(35) scale(0.65)"/>
+                <use href="#fl-light-tl" transform="translate(105,65) rotate(-10) scale(0.55)"/>
+                <use href="#fl-pink-tl" transform="translate(30,105) rotate(50) scale(0.5)"/>
+                <ellipse cx="130" cy="45" rx="5" ry="9" fill="#ffb7c5" opacity="0.5" transform="rotate(25 130 45)"/>
+                <ellipse cx="20" cy="120" rx="4" ry="8" fill="#ffe4e1" opacity="0.5" transform="rotate(-15 20 120)"/>
+                <ellipse cx="95" cy="125" rx="4" ry="7" fill="#ffb7c5" opacity="0.4" transform="rotate(55 95 125)"/>
+            </svg>
+        </div>
+        <div class="corner-flower top-right">
+            <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <g id="fl-pink-tr">
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(72)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(144)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(216)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(288)"/>
+                        <circle cx="0" cy="0" r="5" fill="#ffe4b5"/>
+                        <circle cx="0" cy="0" r="2.5" fill="#daa520"/>
+                    </g>
+                    <g id="fl-light-tr">
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(72)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(144)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(216)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(288)"/>
+                        <circle cx="0" cy="0" r="5" fill="#fff8dc"/>
+                        <circle cx="0" cy="0" r="2.5" fill="#daa520"/>
+                    </g>
+                </defs>
+                <use href="#fl-pink-tr" transform="translate(160,40) rotate(-15) scale(0.95)"/>
+                <use href="#fl-light-tr" transform="translate(115,30) rotate(20) scale(0.75)"/>
+                <use href="#fl-pink-tr" transform="translate(145,80) rotate(-35) scale(0.65)"/>
+                <use href="#fl-light-tr" transform="translate(95,65) rotate(10) scale(0.55)"/>
+                <use href="#fl-pink-tr" transform="translate(170,105) rotate(-50) scale(0.5)"/>
+                <ellipse cx="70" cy="45" rx="5" ry="9" fill="#ffb7c5" opacity="0.5" transform="rotate(-25 70 45)"/>
+                <ellipse cx="180" cy="120" rx="4" ry="8" fill="#ffe4e1" opacity="0.5" transform="rotate(15 180 120)"/>
+                <ellipse cx="105" cy="125" rx="4" ry="7" fill="#ffb7c5" opacity="0.4" transform="rotate(-55 105 125)"/>
+            </svg>
+        </div>
+        <div class="corner-flower bottom-left">
+            <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <g id="fl-pink-bl">
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(72)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(144)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(216)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(288)"/>
+                        <circle cx="0" cy="0" r="5" fill="#ffe4b5"/>
+                        <circle cx="0" cy="0" r="2.5" fill="#daa520"/>
+                    </g>
+                    <g id="fl-light-bl">
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(72)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(144)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(216)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(288)"/>
+                        <circle cx="0" cy="0" r="5" fill="#fff8dc"/>
+                        <circle cx="0" cy="0" r="2.5" fill="#daa520"/>
+                    </g>
+                </defs>
+                <use href="#fl-pink-bl" transform="translate(40,120) rotate(-15) scale(0.95)"/>
+                <use href="#fl-light-bl" transform="translate(85,130) rotate(20) scale(0.75)"/>
+                <use href="#fl-pink-bl" transform="translate(55,80) rotate(-35) scale(0.65)"/>
+                <use href="#fl-light-bl" transform="translate(105,95) rotate(10) scale(0.55)"/>
+                <use href="#fl-pink-bl" transform="translate(30,55) rotate(-50) scale(0.5)"/>
+                <ellipse cx="130" cy="115" rx="5" ry="9" fill="#ffb7c5" opacity="0.5" transform="rotate(-25 130 115)"/>
+                <ellipse cx="20" cy="40" rx="4" ry="8" fill="#ffe4e1" opacity="0.5" transform="rotate(15 20 40)"/>
+                <ellipse cx="95" cy="35" rx="4" ry="7" fill="#ffb7c5" opacity="0.4" transform="rotate(-55 95 35)"/>
+            </svg>
+        </div>
+        <div class="corner-flower bottom-right">
+            <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <g id="fl-pink-br">
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(72)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(144)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(216)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffb7c5" opacity="0.85" transform="rotate(288)"/>
+                        <circle cx="0" cy="0" r="5" fill="#ffe4b5"/>
+                        <circle cx="0" cy="0" r="2.5" fill="#daa520"/>
+                    </g>
+                    <g id="fl-light-br">
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(72)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(144)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(216)"/>
+                        <ellipse cx="0" cy="-26" rx="11" ry="25" fill="#ffe4e1" opacity="0.8" transform="rotate(288)"/>
+                        <circle cx="0" cy="0" r="5" fill="#fff8dc"/>
+                        <circle cx="0" cy="0" r="2.5" fill="#daa520"/>
+                    </g>
+                </defs>
+                <use href="#fl-pink-br" transform="translate(160,120) rotate(15) scale(0.95)"/>
+                <use href="#fl-light-br" transform="translate(115,130) rotate(-20) scale(0.75)"/>
+                <use href="#fl-pink-br" transform="translate(145,80) rotate(35) scale(0.65)"/>
+                <use href="#fl-light-br" transform="translate(95,95) rotate(-10) scale(0.55)"/>
+                <use href="#fl-pink-br" transform="translate(170,55) rotate(50) scale(0.5)"/>
+                <ellipse cx="70" cy="115" rx="5" ry="9" fill="#ffb7c5" opacity="0.5" transform="rotate(25 70 115)"/>
+                <ellipse cx="180" cy="40" rx="4" ry="8" fill="#ffe4e1" opacity="0.5" transform="rotate(-15 180 40)"/>
+                <ellipse cx="105" cy="35" rx="4" ry="7" fill="#ffb7c5" opacity="0.4" transform="rotate(55 105 35)"/>
+            </svg>
+        </div>
+        <div class="vignette"></div>
+
+        <div class="invitation-card">
+            <div class="main-section">
+                <div class="photo-left">
+                    <img src="IMG_4679.jpg" alt="ဧည့်သည်တော်များ">
+                </div>
+                <div class="content-right">
+                    <div class="ornament-top"></div>
+                    <div class="title">မင်္ဂလာဦး ဆွမ်းကပ် ဖိတ်ကြားလွှာ</div>
+                    <div class="divider"></div>
+                    
+                    <div class="text-content">
+                        <div class="family-info">
+                            မကွေးတိုင်းဒေသကြီး၊ နတ်မောက်မြို့နယ်၊ ပေါက္ကံကျေးရွာနေ<br>
+                            ဦးဒေါင်းမြိုင် + ဒေါ်မိကွန်း တို့၏ သားငယ်<br>
+                            မအေးအေးအောင် (ခ) မစု / မဝေဝေ တို့၏ မောင်
+                        </div>
+                        <div class="person-name">မောင်မျိုးဝင်းလှိုင် (ခေတ္တဂျပန်)</div>
+                        
+                        <div class="separator">
+                            <span class="sep-line"></span>
+                            <span>နှင့်</span>
+                            <span class="sep-line right"></span>
+                        </div>
+                        
+                        <div class="family-info">
+                            စစ်ကိုင်းတိုင်းဒေသကြီး၊ စစ်ကိုင်းမြို့နယ်၊ ဆင်တပ်ကျေးရွာနေ<br>
+                            ဦးသန်းနိုင် + ဒေါ်လှအုန်း တို့၏ သမီးကြီး<br>
+                            မယမုံခိုင်၏ အမ
+                        </div>
+                        <div class="person-name">မယမုံနိုင် (ခေတ္တဂျပန်)</div>
+                        
+                        <div class="event-intro">
+                            တို့၏ မင်္ဂလာဦး ဆွမ်းကပ် အခမ်းအနားကို
+                        </div>
+                        
+                        <div class="info-box">
+                            <div class="info-item calendar">
+                                <div class="info-icon">📅</div>
+                                <div class="info-text">
+                                    <div class="label">၂၀၂၆ ခုနှစ်</div>
+                                    <div class="value">ဇွန်လ ၃ ရက်</div>
+                                    <div class="sub">(ဗုဒ္ဓဟူးနေ့)</div>
+                                </div>
+                            </div>
+                            <div class="info-item location">
+                                <div class="info-icon">🛕</div>
+                                <div class="info-text">
+                                    <div class="value">Satori Vihara</div>
+                                    <div class="sub">မြန်မာဘုန်းကြီးကျောင်း</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="closing-text">
+                            တွင် ကျင်းပပြုလုပ်မည်ဖြစ်ပါ၍<br>
+                            ကြွရောက်ချီးမြှင့်ပါရန် လေးစားစွာ ဖိတ်ကြားအပ်ပါသည်။
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bottom-photos">
+                <img src="IMG_4670.jpeg" alt="">
+                <img src="IMG_4671.jpeg" alt="">
+                <img src="IMG_4683.jpeg" alt="">
+            </div>
+            
+            <div class="bottom-banner">
+                ချစ်ခင်လေးစားစွာဖြင့် ဖိတ်ကြားအပ်ပါသည်<br>
+                ကြွရောက်ချီးမြှင့်ပါရန် လေးစားစွာ ဖိတ်ကြားအပ်ပါသည် <span class="heart">❤</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
