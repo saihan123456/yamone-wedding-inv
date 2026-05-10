@@ -3,6 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="မောင်မျိုးဝင်းလှိုင် နှင့် မယမုံနိုင် တို့၏ မင်္ဂလာဦး ဆွမ်းကပ် အခမ်းအနားသို့ ဖိတ်ကြားအပ်ပါသည်။">
+    <meta name="theme-color" content="#f5e6e0">
+
+    <!-- Open Graph / Facebook / Messenger -->
+    <meta property="og:title" content="မင်္ဂလာဦး ဆွမ်းကပ် ဖိတ်ကြားလွှာ">
+    <meta property="og:description" content="မောင်မျိုးဝင်းလှိုင် နှင့် မယမုံနိုင် တို့၏ မင်္ဂလာဦး ဆွမ်းကပ် အခမ်းအနားသို့ ဖိတ်ကြားအပ်ပါသည်။">
+    <meta property="og:image" content="https://saihan123456.github.io/yamone-wedding-inv/IMG_4679.jpg">
+    <meta property="og:url" content="https://saihan123456.github.io/yamone-wedding-inv/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="my_MM">
+    <meta property="og:site_name" content="မင်္ဂလာဦး ဆွမ်းကပ် ဖိတ်ကြားလွှာ">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="မင်္ဂလာဦး ဆွမ်းကပ် ဖိတ်ကြားလွှာ">
+    <meta name="twitter:description" content="မောင်မျိုးဝင်းလှိုင် နှင့် မယမုံနိုင် တို့၏ မင်္ဂလာဦး ဆွမ်းကပ် အခမ်းအနားသို့ ဖိတ်ကြားအပ်ပါသည်။">
+    <meta name="twitter:image" content="https://saihan123456.github.io/yamone-wedding-inv/IMG_4679.jpg">
+
     <title>မင်္ဂလာဦး ဆွမ်းကပ် ဖိတ်ကြားလွှာ</title>
     <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Noto+Serif+Myanmar:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -60,6 +78,7 @@
             z-index: 2;
         }
 
+        /* Grid layout for the card */
         .invitation-card {
             position: relative;
             z-index: 3;
@@ -69,22 +88,19 @@
             background: rgba(255, 248, 245, 0.96);
             border-radius: 10px;
             box-shadow: 0 8px 32px rgba(139, 90, 70, 0.18);
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 40% 1fr;
+            grid-template-rows: auto auto auto auto auto;
             overflow: hidden;
         }
 
-        /* Top section with main photo and text */
-        .main-section {
-            display: flex;
-            align-items: stretch;
-        }
-
+        /* Photo spans rows 1-3 (text area, info-box, closing-text) */
         .photo-left {
-            width: 38%;
+            grid-column: 1 / 2;
+            grid-row: 1 / 4;
             position: relative;
             overflow: hidden;
-            align-self: stretch;
+            z-index: 1;
         }
 
         .photo-left img {
@@ -94,7 +110,7 @@
             object-position: 55% top;
         }
 
-        /* Soft fade on right edge of photo */
+        /* Soft fade on right edge of photo into text */
         .photo-left::after {
             content: '';
             position: absolute;
@@ -102,16 +118,64 @@
             right: 0;
             width: 40%;
             height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 248, 245, 0.92));
+            background: linear-gradient(to right, transparent 0%, transparent 30%, rgba(255, 248, 245, 0.7) 65%, rgba(255, 248, 245, 0.96) 100%);
+            z-index: 2;
         }
 
+        /* Soft fade at bottom of photo */
+        .photo-left::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 22%;
+            background: linear-gradient(to top, rgba(255, 248, 245, 0.96) 0%, rgba(255, 248, 245, 0.5) 45%, transparent 100%);
+            z-index: 2;
+        }
+
+        /* Text area in column 2, row 1 */
         .content-right {
-            flex: 1;
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
             padding: 2vh 2.5vw 2vh 1.5vw;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle cherry blossom background behind text */
+        .content-right::before {
+            content: '';
+            position: absolute;
+            top: 2%;
+            right: -8%;
+            width: 160px;
+            height: 160px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg transform='translate(50,50)'%3E%3Cellipse cx='0' cy='-28' rx='12' ry='28' fill='%23ffb7c5' opacity='0.25' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-28' rx='12' ry='28' fill='%23ffb7c5' opacity='0.25' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-28' rx='12' ry='28' fill='%23ffb7c5' opacity='0.25' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-28' rx='12' ry='28' fill='%23ffb7c5' opacity='0.25' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-28' rx='12' ry='28' fill='%23ffb7c5' opacity='0.25' transform='rotate(288)'/%3E%3Ccircle cx='0' cy='0' r='5' fill='%23ffe4b5' opacity='0.35'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .content-right::after {
+            content: '';
+            position: absolute;
+            bottom: 8%;
+            left: -6%;
+            width: 130px;
+            height: 130px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg transform='translate(50,50)'%3E%3Cellipse cx='0' cy='-28' rx='12' ry='28' fill='%23ffe4e1' opacity='0.22' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-28' rx='12' ry='28' fill='%23ffe4e1' opacity='0.22' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-28' rx='12' ry='28' fill='%23ffe4e1' opacity='0.22' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-28' rx='12' ry='28' fill='%23ffe4e1' opacity='0.22' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-28' rx='12' ry='28' fill='%23ffe4e1' opacity='0.22' transform='rotate(288)'/%3E%3Ccircle cx='0' cy='0' r='5' fill='%23fff8dc' opacity='0.3'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 0;
         }
 
         /* Ornamental top decoration */
@@ -162,6 +226,8 @@
             font-family: 'Noto Serif Myanmar', 'Padauk', serif;
             color: #5a3a2a;
             line-height: 1.55;
+            position: relative;
+            z-index: 1;
         }
 
         .text-content .family-info {
@@ -207,18 +273,21 @@
             letter-spacing: 0.2px;
         }
 
-        /* Info box */
+        /* Info box spans full width, overlays photo with transparency */
         .info-box {
+            grid-column: 1 / 3;
+            grid-row: 2 / 3;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 2vw;
-            margin: 1vh 0;
+            margin: 0.5vh 2vw;
             padding: 1vh 1.5vw;
             border: 1.5px solid #d4af37;
             border-radius: 8px;
-            background: rgba(255, 250, 245, 0.8);
-            width: 100%;
+            background: rgba(255, 250, 245, 0.68);
+            position: relative;
+            z-index: 2;
         }
 
         .info-item {
@@ -246,35 +315,42 @@
         }
 
         .info-text .label {
-            font-size: clamp(0.48rem, 1.15vh, 0.8rem);
+            font-size: clamp(0.62rem, 1.55vh, 1.05rem);
             color: #8b2635;
         }
 
         .info-text .value {
-            font-size: clamp(0.58rem, 1.35vh, 0.95rem);
+            font-size: clamp(0.72rem, 1.8vh, 1.2rem);
             color: #5a3a2a;
             font-weight: 700;
         }
 
         .info-text .sub {
-            font-size: clamp(0.48rem, 1.05vh, 0.75rem);
+            font-size: clamp(0.58rem, 1.4vh, 0.9rem);
             color: #7a5a4a;
         }
 
+        /* Closing text spans full width, overlays photo with transparency */
         .closing-text {
+            grid-column: 1 / 3;
+            grid-row: 3 / 4;
             font-size: clamp(0.58rem, 1.35vh, 0.95rem);
             color: #5a3a2a;
             text-align: center;
             line-height: 1.55;
-            margin-top: 0.7vh;
             letter-spacing: 0.2px;
+            padding: 0.5vh 2vw 1vh;
+            position: relative;
+            z-index: 2;
         }
 
         /* Bottom photos */
         .bottom-photos {
+            grid-column: 1 / 3;
+            grid-row: 4 / 5;
             display: flex;
-            gap: 1.5vw;
-            padding: 1.5vh 2vw 2.5vh;
+            gap: 1vw;
+            padding: 1.5vh 0.5vw 2.5vh;
             justify-content: center;
             align-items: flex-end;
             position: relative;
@@ -282,7 +358,7 @@
         }
 
         .bottom-photos img {
-            width: 28%;
+            width: 31%;
             aspect-ratio: 3/4;
             object-fit: cover;
             border-radius: 8px;
@@ -292,6 +368,8 @@
 
         /* Bottom banner */
         .bottom-banner {
+            grid-column: 1 / 3;
+            grid-row: 5 / 6;
             background: linear-gradient(to right, #eab8b0, #f5d0c8, #eab8b0);
             padding: 1.5vh 3vw;
             text-align: center;
@@ -342,7 +420,7 @@
                 margin-bottom: 0.8vh;
             }
             .text-content .family-info,
-            .text-content .event-intro {
+            .event-intro {
                 font-size: clamp(0.5rem, 1.4vh, 0.72rem);
                 margin-bottom: 0.25vh;
             }
@@ -358,7 +436,7 @@
                 margin: 0.5vh 0;
             }
             .info-box {
-                margin: 0.7vh 0;
+                margin: 0.4vh 1.5vw;
                 padding: 0.7vh 1.2vw;
                 gap: 1.5vw;
             }
@@ -366,21 +444,21 @@
                 font-size: clamp(0.9rem, 2.2vh, 1.4rem);
             }
             .info-text .label {
-                font-size: clamp(0.42rem, 1.1vh, 0.65rem);
+                font-size: clamp(0.55rem, 1.4vh, 0.8rem);
             }
             .info-text .value {
-                font-size: clamp(0.5rem, 1.3vh, 0.75rem);
+                font-size: clamp(0.62rem, 1.6vh, 0.9rem);
             }
             .info-text .sub {
-                font-size: clamp(0.42rem, 1.0vh, 0.6rem);
+                font-size: clamp(0.5rem, 1.25vh, 0.7rem);
             }
             .closing-text {
                 font-size: clamp(0.5rem, 1.25vh, 0.75rem);
-                margin-top: 0.4vh;
+                padding: 0.3vh 1.5vw 0.6vh;
             }
             .bottom-photos {
-                padding: 1vh 1.5vw 2vh;
-                gap: 1vw;
+                padding: 1vh 0.5vw 2vh;
+                gap: 0.8vw;
             }
             .bottom-photos img {
                 border-radius: 6px;
@@ -396,8 +474,8 @@
 
         /* Narrow screens to prevent text wrapping */
         @media (max-width: 500px) {
-            .photo-left {
-                width: 30%;
+            .invitation-card {
+                grid-template-columns: 32% 1fr;
             }
             .title {
                 font-size: clamp(0.65rem, 1.7vh, 1.2rem);
@@ -412,7 +490,7 @@
                 font-size: clamp(0.85rem, 2vh, 1.3rem);
             }
             .info-text .value {
-                font-size: clamp(0.5rem, 1.2vh, 0.75rem);
+                font-size: clamp(0.62rem, 1.5vh, 0.85rem);
             }
         }
 
@@ -421,9 +499,7 @@
             .invitation-card {
                 width: 100vw;
                 border-radius: 0;
-            }
-            .photo-left {
-                width: 28%;
+                grid-template-columns: 30% 1fr;
             }
             .title {
                 font-size: clamp(0.6rem, 1.5vh, 1.1rem);
@@ -565,75 +641,78 @@
         <div class="vignette"></div>
 
         <div class="invitation-card">
-            <div class="main-section">
-                <div class="photo-left">
-                    <img src="IMG_4679.jpg" alt="ဧည့်သည်တော်များ">
-                </div>
-                <div class="content-right">
-                    <div class="ornament-top"></div>
-                    <div class="title">မင်္ဂလာဦး ဆွမ်းကပ် ဖိတ်ကြားလွှာ</div>
-                    <div class="divider"></div>
-                    
-                    <div class="text-content">
-                        <div class="family-info">
-                            မကွေးတိုင်းဒေသကြီး၊ နတ်မောက်မြို့နယ်၊ ပေါက္ကံကျေးရွာနေ<br>
-                            ဦးဒေါင်းမြိုင် + ဒေါ်မိကွန်း တို့၏ သားငယ်<br>
-                            မအေးအေးအောင် (ခ) မစု / မဝေဝေ တို့၏ မောင်
-                        </div>
-                        <div class="person-name">မောင်မျိုးဝင်းလှိုင် (ခေတ္တဂျပန်)</div>
-                        
-                        <div class="separator">
-                            <span class="sep-line"></span>
-                            <span>နှင့်</span>
-                            <span class="sep-line right"></span>
-                        </div>
-                        
-                        <div class="family-info">
-                            စစ်ကိုင်းတိုင်းဒေသကြီး၊ စစ်ကိုင်းမြို့နယ်၊ ဆင်တပ်ကျေးရွာနေ<br>
-                            ဦးသန်းနိုင် + ဒေါ်လှအုန်း တို့၏ သမီးကြီး<br>
-                            မယမုံခိုင်၏ အမ
-                        </div>
-                        <div class="person-name">မယမုံနိုင် (ခေတ္တဂျပန်)</div>
-                        
-                        <div class="event-intro">
-                            တို့၏ မင်္ဂလာဦး ဆွမ်းကပ် အခမ်းအနားကို
-                        </div>
-                        
-                        <div class="info-box">
-                            <div class="info-item calendar">
-                                <div class="info-icon">📅</div>
-                                <div class="info-text">
-                                    <div class="label">၂၀၂၆ ခုနှစ်</div>
-                                    <div class="value">ဇွန်လ ၃ ရက်</div>
-                                    <div class="sub">(ဗုဒ္ဓဟူးနေ့)</div>
-                                </div>
-                            </div>
-                            <div class="info-item location">
-                                <div class="info-icon">🛕</div>
-                                <div class="info-text">
-                                    <div class="value">Satori Vihara</div>
-                                    <div class="sub">မြန်မာဘုန်းကြီးကျောင်း</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="closing-text">
-                            တွင် ကျင်းပပြုလုပ်မည်ဖြစ်ပါ၍<br>
-                            ကြွရောက်ချီးမြှင့်ပါရန် လေးစားစွာ ဖိတ်ကြားအပ်ပါသည်။
-                        </div>
+            <!-- Photo spans rows 1-3, reaching down to bottom-photos -->
+            <div class="photo-left">
+                <img src="IMG_4679.jpg" alt="ဧည့်သည်တော်များ">
+            </div>
+
+            <!-- Text content sits in column 2, row 1 -->
+            <div class="content-right">
+                <div class="ornament-top"></div>
+                <div class="title">မင်္ဂလာဦး ဆွမ်းကပ် ဖိတ်ကြားလွှာ</div>
+                <div class="divider"></div>
+
+                <div class="text-content">
+                    <div class="family-info">
+                        မကွေးတိုင်းဒေသကြီး၊ နတ်မောက်မြို့နယ်၊ ပေါက္ကံကျေးရွာနေ<br>
+                        ဦးဒေါင်းမြိုင် + ဒေါ်မိကွန်း တို့၏ သားငယ်<br>
+                        မအေးအေးအောင် (ခ) မစု / မဝေဝေ တို့၏ မောင်
+                    </div>
+                    <div class="person-name">မောင်မျိုးဝင်းလှိုင် (ခေတ္တဂျပန်)</div>
+
+                    <div class="separator">
+                        <span class="sep-line"></span>
+                        <span>နှင့်</span>
+                        <span class="sep-line right"></span>
+                    </div>
+
+                    <div class="family-info">
+                        စစ်ကိုင်းတိုင်းဒေသကြီး၊ စစ်ကိုင်းမြို့နယ်၊ ဆင်တပ်ကျေးရွာနေ<br>
+                        ဦးသန်းနိုင် + ဒေါ်လှအုန်း တို့၏ သမီးကြီး<br>
+                        မယမုံခိုင်၏ အမ
+                    </div>
+                    <div class="person-name">မယမုံနိုင် (ခေတ္တဂျပန်)</div>
+
+                    <div class="event-intro">
+                        တို့၏ မင်္ဂလာဦး ဆွမ်းကပ် အခမ်းအနားကို
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Info box spans full card width, overlays photo-left -->
+            <div class="info-box">
+                <div class="info-item calendar">
+                    <div class="info-icon">📅</div>
+                    <div class="info-text">
+                        <div class="label">၂၀၂၆ ခုနှစ်</div>
+                        <div class="value">ဇွန်လ ၃ ရက်</div>
+                        <div class="sub">(ဗုဒ္ဓဟူးနေ့)</div>
+                    </div>
+                </div>
+                <div class="info-item location">
+                    <div class="info-icon">🛕</div>
+                    <div class="info-text">
+                        <div class="value">Satori Vihara</div>
+                        <div class="sub">မြန်မာဘုန်းကြီးကျောင်း</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Closing text spans full card width, overlays photo-left -->
+            <div class="closing-text">
+                တွင် ကျင်းပပြုလုပ်မည်ဖြစ်ပါ၍<br>
+                ကြွရောက်ချီးမြှင့်ပါရန် လေးစားစွာ ဖိတ်ကြားအပ်ပါသည်။
+            </div>
+
             <div class="bottom-photos">
                 <img src="IMG_4670.jpeg" alt="">
                 <img src="IMG_4671.jpeg" alt="">
                 <img src="IMG_4683.jpeg" alt="">
             </div>
-            
+
             <div class="bottom-banner">
-                ချစ်ခင်လေးစားစွာဖြင့် ဖိတ်ကြားအပ်ပါသည်<br>
-                ကြွရောက်ချီးမြှင့်ပါရန် လေးစားစွာ ဖိတ်ကြားအပ်ပါသည် <span class="heart">❤</span>
+                ချစ်ခင်ရသော မိတ်ဆွေများအားလုံး<br>
+                ကြွရောက်ချီးမြှင့်ပေးပါရန် လေးစားစွာ ဖိတ်ကြားအပ်ပါသည် <span class="heart">❤</span>
             </div>
         </div>
     </div>
